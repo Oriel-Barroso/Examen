@@ -1,6 +1,3 @@
-from decimal import Decimal
-
-
 class TaTeTi():
     def __init__(self, board=[], valid=[], piece=''):
         self.board = board
@@ -57,15 +54,17 @@ class TaTeTi():
 
     def win(self):
         s = True
-        valor = list(self._board)
-        valor2 = self._piece
+        valor = self._board.items()
+        valor = list(valor)
         while s:
-            for v in valor:
-                if valor2 != v :
-                    return False
-                else:
-                    return True
-                    s = False
+            for v in self._valid:
+                for v1 in valor:
+                    print(valor)
+                    if v1 != v or v1 != v:
+                        return False
+                    else:
+                        return True
+                        s = False
 
     def game(self):
         print(self)
@@ -77,7 +76,6 @@ class TaTeTi():
             if len(self.valid) == 0:
                 winner = 'Ninguno'
             return winner
-
 
 
 if __name__ == '__main__':
