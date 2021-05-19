@@ -1,36 +1,29 @@
 class TaTeTi():
-    def __init__(self, board=[], valid=[], piece=''):
-        self.board = board
-        self.valid = valid
+    def __init__(self, board={}, valid=[], piece=''):
+        self.board = {'1.1':'1.1','1.2':'1.2','1.3':'1.3',
+                      '2.1':'2.1','2.2':'2.2','2.3':'2.3',
+                      '3.1':'3.1','3.2':'3.2','3.3':'3.3'}
+        self.valid = list(self.board.values())
         self.piece = piece
-
     def __str__(self):
-        expected = '1.1|1.2|1.3\n---+---+---\n2.1|2.2|2.3\n'
-        expected += '---+---+---\n3.1|3.2|3.3'
-        return expected
-
+        return '1.1|1.2|1.3\n---+---+---\n2.1|2.2|2.3\n---+---+---\n3.1|3.2|3.3'
+    
     @property
     def board(self):
         return self._board
 
     @board.setter
-    def board(self, positions):
-        positions = {'1.1': '1.1', '1.2': '1.2', '1.3': '1.3',
-                     '2.1': '2.1', '2.2': '2.2', '2.3': '2.3',
-                     '3.1': '3.1', '3.2': '3.2', '3.3': '3.3'}
-        self._board = positions
-
+    def board(self, valor):
+        self._board = valor
+    
     @property
     def valid(self):
         return self._valid
 
     @valid.setter
-    def valid(self, valid):
-        valid = ['1.1', '1.2', '1.3',
-                 '2.1', '2.2', '2.3',
-                 '3.1', '3.2', '3.3']
-        self._valid = valid
-
+    def valid(self, valor):
+        self._valid = valor
+    
     @property
     def piece(self):
         return self._piece
@@ -40,31 +33,44 @@ class TaTeTi():
         self._piece = valor
 
     def input_position(self):
-        estate = True
-        valor = self.valid
-        while estate:
-            position = str(input('Valor: '))
-            for valor1 in valor:
-                if position != valor1:
-                    print('Error')
-                else:
-                    valor.remove(position)
-                    estate = False
-        return position
+        while True:
+            a = str(input('posicion a eliminar: '))
+            if a not in self.board.values():
+                print('posicion incorrecta')
+            else:
+                self.valid.remove(a)
+                return a
+                break
 
     def win(self):
-        s = True
-        valor = self._board.items()
-        valor = list(valor)
-        while s:
-            for v in self._valid:
-                for v1 in valor:
-                    print(valor)
-                    if v1 != v or v1 != v:
-                        return False
-                    else:
-                        return True
-                        s = False
+        board = list(self.board.values())
+        print(board)
+        row = board[0] == board[1] == board[2]
+        if row is True:
+            return True
+        row = board[3] == board[4] == board[5]
+        if row is True:
+            return row
+        row = board[6] == board[7] == board[8]
+        if row is True:
+            return row
+        row = board[0] == board[3] == board[6]
+        if row is True:
+            return row
+        row = board[1] == board[4] == board[7]
+        if row is True:
+            return row
+        row = board[2] == board[5] == board[8]
+        if row is True:
+            return row
+        row = board[0] == board[4] == board[8]
+        print(f'Este es el row {row}, posicion 0 {board[0]}, posicion 4 {board[4]}, posicion 8 {board[8]}')
+        if row is True:
+            return row
+        row = board[2] == board[4] == board[6]
+        if row is True:
+            return row
+        return False
 
     def game(self):
         print(self)
@@ -78,6 +84,8 @@ class TaTeTi():
             return winner
 
 
+
+
 if __name__ == '__main__':
     game = TaTeTi()
-    print('Ganó ' + game.game())
+    game.input_position()
